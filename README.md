@@ -1,5 +1,10 @@
-# Spring boot CRUD By [Sotobotero](http://sotobotero.com)
+# Spring boot CRUD By [Sotobotero](https://sotobotero.com)
 
+**Content**   
+1. [Como contribuir con este proyecto](#como-contribuir-con-este-proyecto)
+2. [Como empezar a usar la aplicación](#como-empezar)
+3. [How contribute to this project](#how-contribute-to-this-project)
+4. [Getting Started](#getting-started)
 ## Como contribuir con este proyecto.
 
 1. Primero, necesitas hacer un fork del repositorio al que deseas contribuir. Esto creará una copia del repositorio en tu cuenta de GitHub. Puedes hacer un fork de un repositorio haciendo clic en el botón "Fork" en la esquina superior derecha de la página del repositorio. 
@@ -18,6 +23,17 @@
 
 8. Por último, necesitas crear una solicitud de extracción (pull request) desde tu rama al repositorio original del que hiciste la bifurcación. Una solicitud de extracción es una solicitud para que los mantenedores del repositorio original revisen y fusionen tus cambios en su rama principal. Puedes crear una solicitud de extracción haciendo clic en el botón "Pull Request" en la página de tu repositorio bifurcado en GitHub. 
 
+## Como empezar
+### Requisitos
+1. Java 17 o superior
+
+### Instalación
+1. Clonar el repositorio
+2. Entrar a la carpeta del proyecto y ejecutar el comando `./mvnw package`
+3. Ejecutar el comando `java -jar target/customer-back-0.0.1-SNAPSHOT.jar`
+4. Abrir el navegador en la dirección `http://localhost:8080/swagger-ui.html`
+5. Opcionalmente, puedes clonar el front en angular del siguiente [repositorio:](https://github.com/sotobotero/customer-front)
+
 ## How contribute to this project. 
 
 1. First, you need to fork the repository that you want to contribute to. This will create a copy of the repository under your own GitHub account. You can fork a repository by clicking the Fork button on the top right corner of the repository page.
@@ -35,3 +51,14 @@
 7. Next, you need to push your changes to your forked repository on GitHub. This will upload your branch and its commits to your online repository. You can push your changes by using the git push command with the name of your remote (usually origin) and the name of your branch. 
 
 8. Finally, you need to create a pull request from your branch to the original repository that you forked from. A pull request is a request for the maintainers of the original repository to review and merge your changes into their main branch. You can create a pull request by clicking the Pull Request button on your forked repository page on GitHub.
+
+## Getting Started
+### Requirements
+1. Java 17 or higher
+### Installation
+1. Clone the repository.
+2. Enter the project folder and run the command ./mvnw package.
+3. Run the command java -jar target/customer-back-0.0.1-SNAPSHOT.jar.
+4. Open your browser and go to http://localhost:8080/swagger-ui.html.
+5. Optionally, you can clone the Angular front-end from the following [repository:](https://github.com/sotobotero/customer-front.)
+
