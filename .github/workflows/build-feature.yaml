@@ -33,6 +33,49 @@ jobs:
           mvn clean test package
           echo "build with maven"
 
+#######################################################
+# Automatic merge to develop branch
+#######################################################
+  merge-feature-into-develop:
+    runs-on: ubuntu-latest
+    needs: build-feature
+    if: ${{ success() }}
+   #[For a specific job, you can use jobs.<job_id>.permissions to modify the default permissions granted to the GITHUB_TOKEN](https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs)
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      ########################################################
+      # 1- Dowload source code
+      #Only a single commit is fetched by default, for the ref/SHA that triggered the workflow, Set fetch-depth: 0 to fetch all history for all branches and tags
+      ########################################################
+      - uses: actions/checkout@v3
+        with:
+          #Dowload the code from destination branch (develop)
+          ref: ${{ github.base_ref }}
+          fetch-depth: 0
+
+      # ########################################################
+      # # 2- Merge to development branch
+      # ########################################################
+      - name: Merge to development branch
+        if: ${{ success() }}
+        run: |
+          git config --global user.email "EMAIL-OF-WORKFLOW@USER"
+          git config --global user.name "WORKFLOW-USER" 
+          #Using -m "mesage" on merge command ins mandatori here in order to avoid open a text editor to write a commit message
+          git merge --no-ff --verbose origin/${{ github.event.pull_request.head.ref }} -m "Merge pull request #${{ github.event.number }}"
+
+      ########################################################
+      # 3- Push changes after merge
+      ##########################################################
+
+      - name: Push changes after merge
+        if: ${{ success() }}
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.base_ref }}
 
 
     
