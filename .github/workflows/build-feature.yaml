@@ -1,8 +1,8 @@
 name: build and test feature branch
 on:
-  push:
-    branches:
-      - feature/*
+  pull_request:
+    branches: [devbelop]
+      
 jobs: 
   build-feature:
     runs-on: ubuntu-latest
