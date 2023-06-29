@@ -1,7 +1,7 @@
 name: build and test feature branch
 on:
   pull_request:
-    branches: [devbelop]
+    branches: [develop]
     types: [opened, reopened]
       
 jobs: 
