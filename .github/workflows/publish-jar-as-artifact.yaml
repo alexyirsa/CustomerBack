@@ -1,0 +1,68 @@
+name: Publish jar as artifact 
+on:
+  repository_dispatch:
+    types: [publish-artifact-event]
+jobs:
+  dowlonad-artifact-job:
+    runs-on: ubuntu-latest
+    env:
+      ARTIFACT_NAME: 'customer-0.0.1-SNAPSHOT.jar'
+    permissions:
+      contents: write
+      pull-requests: write
+      
+    steps:      
+      - name: Debug Payload
+        run: |     
+         echo ${{ github.event.client_payload.base_branch }}
+               
+      ##########################################################
+      # 1- Dolowload source code from default branch in order to retrive Dockerfile, and apload it as docker build context
+      ########################################################
+      
+      - uses: actions/checkout@v3  
+        with:
+          ref: ${{ github.event.client_payload.base_branch }}
+          fetch-depth: 0      
+
+      - name: check last hashid
+        run: |
+          git log -2 
+
+      ########################################################
+      # 2- setup java 17 and check that source code is buildable
+      ########################################################
+      - name: setup java 17 
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin' # See 'Supported distributions' for available options
+          java-version: '17'
+
+      - name: Cache local Maven repository
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: build with maven
+        #The "SNAPSHOT" term means that the build is a snapshot of your code at a given time    
+        #The --batch-mode flag indicates that the build should be run without any user interaction
+        #(Avoid caching versions of your own code)The --update-snapshots flag tells Maven to check for any updated snapshots of dependencies and use those instead of the versions specified in the project's pom.xml file. 
+        #The package argument tells Maven to package the project into a distributable format, such as a JAR or WAR file.
+        run: |
+           mvn clean test package -DskipTests=true --batch-mode --update-snapshots      
+           echo ls -R target/
+           echo ls -la 
+    
+             
+   ######################################################## 
+      # 4- publish it as artifact
+      ######################################################## 
+      - name: Publish Package
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+         name: artifactjar
+         path: ${{ github.workspace }}/target/${{ env.ARTIFACT_NAME }}   
