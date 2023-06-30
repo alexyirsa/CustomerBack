@@ -6,7 +6,7 @@ jobs:
   dowlonad-artifact-job:
     runs-on: ubuntu-latest
     env:
-      ARTIFACT_NAME: 'ada_qartz-0.0.1-SNAPSHOT.jar'
+      ARTIFACT_NAME: 'customer-0.0.1-SNAPSHOT.jar'
     permissions:
       contents: write
       pull-requests: write
@@ -16,7 +16,7 @@ jobs:
         run: |     
          echo ${{ github.event.client_payload.base_branch }}
                
-      ######################################################## 
+      ##########################################################
       # 1- Dolowload source code from default branch in order to retrive Dockerfile, and apload it as docker build context
       ########################################################
       
